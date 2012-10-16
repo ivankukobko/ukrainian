@@ -8,6 +8,8 @@ module Ukrainian
 
   def pluralize(n, *variants)
     raise ArgumentError, "Must have a Numeric as a first parameter" unless n.is_a?(Numeric)
+    raise ArgumentError, "Must have at least 3 variants for pluralization" if variants.size < 3
+    raise ArgumentError, "Must have at least 4 variants for pluralization" if (variants.size < 4 && n != n.round)
     I18n.backend.send(:pluralize, :uk, {:one => variants[0], :few => variants[1],
       :many => variants[2], :other => variants[3] || variants[2]}, n)
   end
