@@ -1,10 +1,14 @@
 $KCODE = 'u' if RUBY_VERSION < "1.9"
 
 #require File.join(File.dirname(__FILE__), 'ukrainian/backend/simple')
+$:.push File.join(File.dirname(__FILE__), 'ukrainian')
+
 require 'i18n'
 
 module Ukrainian
   extend self
+
+  autoload :Transliteration, 'transliteration'
 
   def pluralize(n, *variants)
     raise ArgumentError, "Must have a Numeric as a first parameter" unless n.is_a?(Numeric)
@@ -13,6 +17,12 @@ module Ukrainian
     I18n.backend.send(:pluralize, :uk, {:one => variants[0], :few => variants[1],
       :many => variants[2], :other => variants[3] || variants[2]}, n)
   end
+
+  def transliterate(str)
+    Ukrainian::Transliteration.transliterate(str)
+  end
+  alias :translit :transliterate
+
 
   def init_i18n
     I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
