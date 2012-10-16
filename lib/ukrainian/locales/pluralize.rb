@@ -1,18 +1,12 @@
 {
   :uk => {
-    :pluralize => lambda { |n|      
-      modulo10 = n.modulo(10)
-      modulo100 = n.modulo(100)
-      
-      if modulo10 == 1 && modulo100 != 11
-        :one
-      elsif (modulo10 == 2 || modulo10 == 3 || modulo10 == 4) && !(modulo100 == 12 || modulo100 == 13 || modulo100 == 14)
-        :few
-      elsif modulo10 == 0 || (modulo10 == 5 || modulo10 == 6 || modulo10 == 7 || modulo10 == 8 || modulo10 == 9) || (modulo100 == 11 || modulo100 == 12 || modulo100 == 13 || modulo100 == 14)
-        :many
-      else
-        :other
-      end
+    :'i18n' => {
+      :plural => {
+        :rule => lambda { |n|
+          :one
+          #n % 10 == 1 && n % 100 != 11 ? :one : [2, 3, 4].include?(n % 10) && ![12, 13, 14].include?(n % 100) ? :few : n % 10 == 0 || [5, 6, 7, 8, 9].include?(n % 10) || [11, 12, 13, 14].include?(n % 100) ? :many : :other
+        }
+      }
     }
   }
 }

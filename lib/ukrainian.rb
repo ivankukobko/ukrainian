@@ -1,6 +1,6 @@
 $KCODE = 'u' if RUBY_VERSION < "1.9"
 
-require File.join(File.dirname(__FILE__), 'ukrainian/backend/simple')
+#require File.join(File.dirname(__FILE__), 'ukrainian/backend/simple')
 require 'i18n'
 
 module Ukrainian
@@ -13,7 +13,12 @@ module Ukrainian
   end
 
   def init_i18n
+    I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
+    I18n::Backend::Simple.send(:include, I18n::Backend::Transliterator)
+
     I18n.load_path.unshift(*locale_files)
+
+    I18n.reload!
   end
 
   protected
