@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 module Ukrainian
-  # Russian transliteration
+  # Ukrainian transliteration
   #
-  # Транслитерация для букв русского алфавита
+  # Транслитерация для букв украинского алфавита
   module Transliteration
     extend self
 
@@ -45,9 +45,9 @@ module Ukrainian
     UPPER = (UPPER_SINGLE.merge(UPPER_MULTI)).freeze
     MULTI_KEYS = (LOWER_MULTI.merge(UPPER_MULTI)).keys.sort_by {|s| s.length}.reverse.freeze
 
-    # Transliterate a string with russian characters
+    # Transliterate a string with ukrainian characters
     #
-    # Возвращает строку, в которой все буквы русского алфавита заменены на похожую по звучанию латиницу
+    # Возвращает строку, в которой все буквы украинского алфавита заменены на похожую по звучанию латиницу
     def transliterate(str)
       chars = str.scan(%r{#{MULTI_KEYS.join '|'}|\w|.})
 
