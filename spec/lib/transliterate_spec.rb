@@ -7,13 +7,13 @@ describe Ukrainian::Transliteration do
   context "#transliterate" do
 
     it "should return transliterate for ukrainian characters" do
-      transliterate( "Ще не вмерла України ні слава, ні воля, Ще нам, браття молодії, усміхнеться доля.").should
-          eq("Shhe ne vmerla Ukrayiny ni slava, ni volya, Shhe nam, brattya molodiyi, usmixnet\"sya dolya.") 
+      transliterate( "Не мала баба клопоту, купила порося.").should
+          eq("Ne mala baba klopotu, kupyla porosya.") 
     end
 
     it "should return transliterate for ukrainian characters" do
-      translit( "Ще не вмерла України ні слава, ні воля, Ще нам, браття молодії, усміхнеться доля.").should
-          eq("Shhe ne vmerla Ukrayiny ni slava, ni volya, Shhe nam, brattya molodiyi, usmixnet\"sya dolya.")
+      translit( "Не мала баба клопоту, купила порося.").should
+                eq("Ne mala baba klopotu, kupyla porosya.")
     end
 
     it "should properly transliterate mixed ukrainian-english strings" do
@@ -24,8 +24,8 @@ describe Ukrainian::Transliteration do
 
       it { translit("ДУЖЕ ДЯКУЮ").should == "DUZHE DYAKUYU"            }
       it { translit("До зустрічі").should == "Do zustrichi"            }
-      it { translit("В. І. Вернадський").should == "V. I. Vernads\"kyj"}
-      it { translit("ВХІД").should == "VHID"                           }
+      it { translit("В. І. Вернадський").should == "V. I. Vernads'kyj"}
+      it { translit("ВХІД").should == "VKHID"                           }
     end
 
     context "should work for multi-char substrings" do
