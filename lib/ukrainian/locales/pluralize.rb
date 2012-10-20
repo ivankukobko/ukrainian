@@ -15,7 +15,7 @@
 #   :other = 1.31, 2.31, 5.31...
 {
   :uk => {
-    :'i18n' => {
+    :i18n => {
       :plural => {
         :rule => lambda { |n|
           :one
