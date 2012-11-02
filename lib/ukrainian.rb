@@ -23,6 +23,19 @@ module Ukrainian
   end
   alias :translit :transliterate
 
+  # Ukrainian locale
+  LOCALE = :'uk'
+
+  # Russian locale
+  def locale
+    LOCALE
+  end
+
+  # See I18n::localize
+  def localize(object, options = {})
+    I18n.localize(object, options.merge({ :locale => LOCALE }))
+  end
+  alias :l :localize
 
   def init_i18n
     I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
