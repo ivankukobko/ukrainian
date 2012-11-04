@@ -35,8 +35,8 @@ describe I18n, "Ukrainian Date/Time localization" do
     end
 
     it "should use abbreviated day names" do
-      l(@date, :format => "%a").should == "Нд"
-      l(@date, :format => "%a, %d %b %Y").should == "Нд, 01 груд. 1985"
+      l(@date, :format => "%a").should == "Нд."
+      l(@date, :format => "%a, %d %b %Y").should == "Нд., 01 груд. 1985"
     end
   end
 
@@ -53,26 +53,26 @@ describe I18n, "Ukrainian Date/Time localization" do
       l(@date, :format => "%e %B %Y").should == " 1 грудня 1985"
       l(@date, :format => "<b>%d</b> %B").should == "<b>01</b> грудня"
       l(@date, :format => "<strong>%e</strong> %B %Y").should == "<strong> 1</strong> грудня 1985"
-      l(@date, :format => "А було тоді %eе число %B %Y").should == "А було тоді 1е число грудня 1985"
+      l(@date, :format => "А було тоді %eе число %B %Y").should == "А було тоді  1е число грудня 1985"
     end
 
     it "should use standalone month names" do
-      l(@date, :format => "%B").should == "грудень"
-      l(@date, :format => "%B %Y").should == "грудень 1985"
+      l(@date, :format => "%B").should == "Грудень"
+      l(@date, :format => "%B %Y").should == "Грудень 1985"
     end
 
     it "should use abbreviated month names" do
       @date = Date.parse("1985-03-01")
-      l(@date, :format => "%d %b").should == "01 березня"
-      l(@date, :format => "%e %b %Y").should == " 1 березня 1985"
-      l(@date, :format => "<b>%d</b> %b").should == "<b>01</b> березня"
-      l(@date, :format => "<strong>%e</strong> %b %Y").should == "<strong> 1</strong> березня 1985"
+      l(@date, :format => "%d %B").should == "01 березня"
+      l(@date, :format => "%e %B %Y").should == " 1 березня 1985"
+      l(@date, :format => "<b>%d</b> %B").should == "<b>01</b> березня"
+      l(@date, :format => "<strong>%e</strong> %B %Y").should == "<strong> 1</strong> березня 1985"
     end
 
     it "should use standalone abbreviated month names" do
       @date = Date.parse("1985-03-01")
-      l(@date, :format => "%b").should == "березень"
-      l(@date, :format => "%b %Y").should == "березень 1985"
+      l(@date, :format => "%B").should == "Березень"
+      l(@date, :format => "%B %Y").should == "Березень 1985"
     end
   end
 
@@ -82,7 +82,7 @@ describe I18n, "Ukrainian Date/Time localization" do
 
   describe "with time formats" do
     it "should use default format" do
-      l(@time).should =~ /^Вс, 01 груд. 1985, 16:05:00/
+      l(@time).should =~ /^Нд., 01 груд. 1985, 16:05:00/
     end
 
     it "should use short format" do
