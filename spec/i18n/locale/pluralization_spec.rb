@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe I18n, "Russian pluralization" do
+describe I18n, "Ukrainian pluralization" do
   before(:each) do
     @hash = {}
     %w(one few many other).each do |key|
@@ -11,18 +11,19 @@ describe I18n, "Russian pluralization" do
     @backend = I18n.backend
   end
   
-  it "should pluralize correctly" do
-    @backend.send(:pluralize, :'ru', @hash, 1).should == 'one'
-    @backend.send(:pluralize, :'ru', @hash, 2).should == 'few'
-    @backend.send(:pluralize, :'ru', @hash, 3).should == 'few'
-    @backend.send(:pluralize, :'ru', @hash, 5).should == 'many'
-    @backend.send(:pluralize, :'ru', @hash, 10).should == 'many'
-    @backend.send(:pluralize, :'ru', @hash, 11).should == 'many'
-    @backend.send(:pluralize, :'ru', @hash, 21).should == 'one'
-    @backend.send(:pluralize, :'ru', @hash, 29).should == 'many'
-    @backend.send(:pluralize, :'ru', @hash, 131).should == 'one'
-    @backend.send(:pluralize, :'ru', @hash, 1.31).should == 'other'
-    @backend.send(:pluralize, :'ru', @hash, 2.31).should == 'other'
-    @backend.send(:pluralize, :'ru', @hash, 3.31).should == 'other'
+  context "should pluralize correctly" do
+
+    it { @backend.send(:pluralize, :'uk', @hash, 1).should == 'one'     }
+    it { @backend.send(:pluralize, :'uk', @hash, 2).should == 'few'     }
+    it { @backend.send(:pluralize, :'uk', @hash, 3).should == 'few'     }
+    it { @backend.send(:pluralize, :'uk', @hash, 5).should == 'many'    }
+    it { @backend.send(:pluralize, :'uk', @hash, 10).should == 'many'   }
+    it { @backend.send(:pluralize, :'uk', @hash, 11).should == 'many'   }
+    it { @backend.send(:pluralize, :'uk', @hash, 21).should == 'one'    }
+    it { @backend.send(:pluralize, :'uk', @hash, 29).should == 'many'   }
+    it { @backend.send(:pluralize, :'uk', @hash, 131).should == 'one'   }
+    it { @backend.send(:pluralize, :'uk', @hash, 1.31).should == 'other'}
+    it { @backend.send(:pluralize, :'uk', @hash, 2.31).should == 'other'}
+    it { @backend.send(:pluralize, :'uk', @hash, 3.31).should == 'other'}
   end
 end

@@ -4,6 +4,7 @@ $KCODE = 'u' if RUBY_VERSION < "1.9"
 $:.push File.join(File.dirname(__FILE__), 'ukrainian')
 
 require 'i18n'
+require 'ukrainian_rails'
 
 module Ukrainian
   extend self
@@ -24,18 +25,29 @@ module Ukrainian
   alias :translit :transliterate
 
   # Ukrainian locale
-  LOCALE = :'uk'
+  LOCALE = :uk
 
-  # Russian locale
+  # Ukrainian locale
   def locale
     LOCALE
   end
+
+  # Regexp machers for context-based russian month names and day names translation
+  LOCALIZE_ABBR_MONTH_NAMES_MATCH = /(%[-\d]?d|%e)(.*)(%b)/
+  LOCALIZE_MONTH_NAMES_MATCH = /(%[-\d]?d|%e)(.*)(%B)/
+  LOCALIZE_STANDALONE_ABBR_DAY_NAMES_MATCH = /^%a/
+  LOCALIZE_STANDALONE_DAY_NAMES_MATCH = /^%A/
 
   # See I18n::localize
   def localize(object, options = {})
     I18n.localize(object, options.merge({ :locale => LOCALE }))
   end
   alias :l :localize
+
+  def translate(key, options = {})
+    I18n.translate(key, options.merge({ :locale => LOCALE }))
+  end
+  alias :t :translate
 
   def init_i18n
     I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
@@ -44,6 +56,11 @@ module Ukrainian
     I18n.load_path.unshift(*locale_files)
 
     I18n.reload!
+  end
+
+  # strftime() proxy with Russian localization
+  def strftime(object, format = :default)
+    localize(object, { :format => format })
   end
 
   protected
