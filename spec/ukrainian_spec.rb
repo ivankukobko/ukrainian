@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
-
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 describe Ukrainian do
+
   describe "with locale" do
     it "should define :'uk' LOCALE" do
       Ukrainian::LOCALE.should == :'uk'
@@ -83,35 +83,38 @@ describe Ukrainian do
     end
   end
 
-  describe "with pluralization" do
-    %w(p pluralize).each do |method|
-      it "'#{method}' should pluralize with variants given" do
-        variants = %w(вещь вещи вещей вещи)
+  describe "#pluralize" do
 
-        Ukrainian.send(method, 1, *variants).should == "вещь"
-        Ukrainian.send(method, 2, *variants).should == 'вещи'
-        Ukrainian.send(method, 3, *variants).should == 'вещи'
-        Ukrainian.send(method, 5, *variants).should == 'вещей'
-        Ukrainian.send(method, 10, *variants).should == 'вещей'
-        Ukrainian.send(method, 21, *variants).should == 'вещь'
-        Ukrainian.send(method, 29, *variants).should == 'вещей'
-        Ukrainian.send(method, 129, *variants).should == 'вещей'
-        Ukrainian.send(method, 131, *variants).should == 'вещь'
-        Ukrainian.send(method, 3.14, *variants).should == 'вещи'
+    context "should pluralize correctly" do
+
+      let(:variants) { %w(річ речі речей речі) }
+
+      it { pluralize( 1, *variants).should == 'річ' }
+      it { pluralize( 2, *variants).should == 'речі' }
+      it { pluralize( 3, *variants).should == 'речі' }
+      it { pluralize( 5, *variants).should == 'речей' }
+      it { pluralize( 10, *variants).should == 'речей' }
+      it { pluralize( 21, *variants).should == 'річ' }
+      it { pluralize( 29, *variants).should == 'речей' }
+      it { pluralize( 129, *variants).should == 'речей' }
+      it { pluralize( 131, *variants).should == 'річ' }
+      it { pluralize( 3.14, *variants).should == 'речі' }
+    end
+
+    context "invalid parameters" do
+
+      let(:variants) { %w(річ речі речей речі) }
+
+      it "should have a Numeric as a first parameter" do
+        lambda {  pluralize( "1", *variants) }.should raise_error(ArgumentError, "Must have a Numeric as a first parameter")
       end
 
-      it "should raise an exception when first parameter is not a number" do
-        lambda { Ukrainian.send(method, nil, "вещь", "вещи", "вещей") }.should raise_error(ArgumentError)
-        lambda { Ukrainian.send(method, "вещь", "вещь", "вещи", "вещей") }.should raise_error(ArgumentError)
+      it "should have at least 3 variants for pluralization" do
+        lambda { pluralize( 1, *variants[0..1] ) }.should raise_error(ArgumentError, "Must have at least 3 variants for pluralization")
       end
 
-      it "should raise an exception when there are not enough variants" do
-        lambda { Ukrainian.send(method, 1) }.should raise_error(ArgumentError)
-        lambda { Ukrainian.send(method, 1, "вещь") }.should raise_error(ArgumentError)
-        lambda { Ukrainian.send(method, 1, "вещь", "вещи") }.should raise_error(ArgumentError)
-        lambda { Ukrainian.send(method, 1, "вещь", "вещи", "вещей") }.should_not raise_error(ArgumentError)
-        lambda { Ukrainian.send(method, 3.14, "вещь", "вещи", "вещей") }.should raise_error(ArgumentError)
-        lambda { Ukrainian.send(method, 3.14, "вещь", "вещи", "вещей", "вещи") }.should_not raise_error(ArgumentError)
+      it "should have at least 4 variants for pluralization" do
+        lambda { pluralize( 1.8, *variants[0..2]) }.should raise_error(ArgumentError, "Must have at least 4 variants for pluralization")
       end
     end
   end
